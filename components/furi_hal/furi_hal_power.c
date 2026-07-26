@@ -443,7 +443,9 @@ void furi_hal_power_shutdown(void) {
      * reboot. Only a full power-cycle would clear it otherwise, which is exactly
      * why the reboot persisted across re-flashes. Disabling it unconditionally
      * makes power-off deterministic regardless of what ran before. */
+#if SOC_GPIO_SUPPORT_HOLD_IO_IN_DSLP && !SOC_GPIO_SUPPORT_HOLD_SINGLE_IO_IN_DSLP
     gpio_deep_sleep_hold_dis();
+#endif
     esp_deep_sleep_start();
 }
 
